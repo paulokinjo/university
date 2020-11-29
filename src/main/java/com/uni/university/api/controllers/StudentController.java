@@ -1,5 +1,6 @@
 package com.uni.university.api.controllers;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.uni.university.model.student.Student;
 import com.uni.university.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,15 @@ public class StudentController {
             return studentService.findByFullName(byName.get());
         }
         return studentService.findAll();
+    }
+
+    @GetMapping(path = "/n1ql")
+    public Object getN1ql(@RequestParam String byName, @RequestParam Optional<Boolean> useLike) {
+        if(useLike.isPresent() && useLike.get()) {
+            return studentService.findByFullNameLikeN1ql(byName);
+        }
+        
+        return studentService.findByFullNameN1ql(byName);
     }
 
     @GetMapping(path = "/{id}")

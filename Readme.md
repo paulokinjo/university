@@ -50,5 +50,16 @@ function(keys, values, reduce) {
 - CouchbaseEnvironmentConfigurer
 - CouchbaseBucketConfig
 
+## Troubleshooting
+```
+org.springframework.data.couchbase.core.CouchbaseQueryExecutionException: Unable to execute query due to the following n1ql errors: 
+{"msg":"No index available on keyspace university that matches your query. Use CREATE INDEX or CREATE PRIMARY INDEX to create an index, or check that your expected index is online.","code":4000}
+```
+
+Solution:
+```
+CREATE PRIMARY INDEX `university-primary-index` ON `university` USING GSI;
+```
+
 # References
 https://start.spring.io

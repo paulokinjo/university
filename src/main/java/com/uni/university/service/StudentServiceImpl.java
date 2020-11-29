@@ -1,5 +1,6 @@
 package com.uni.university.service;
 
+import com.uni.university.data.StudentRepositoryN1ql;
 import com.uni.university.data.StudentRepository;
 import com.uni.university.model.student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private StudentRepositoryN1ql studentRepositoryN1ql;
 
     @Override
     public void saveStudent(Student student) {
@@ -52,5 +55,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Integer getCountByFullName(String fullName) {
         return studentRepository.getCountByFullName(fullName);
+    }
+
+    @Override
+    public List<Student> findByFullNameN1ql(String fullName) {
+        return studentRepositoryN1ql.findByFullName(fullName);
+    }
+
+    @Override
+    public List<Student> findByFullNameLikeN1ql(String fullName) {
+        return studentRepositoryN1ql.findByFullNameLike(fullName);
     }
 }
