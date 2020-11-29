@@ -5,6 +5,9 @@ import com.uni.university.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping(path = "/student")
 public class StudentController {
@@ -17,13 +20,25 @@ public class StudentController {
         studentService.saveStudent(student);
     }
 
+    @GetMapping
+    public Object get(@RequestParam Optional<String> byName, @RequestParam Optional<String> countByName) {
+        if(byName.isPresent()) {
+            if(countByName.isPresent()) {
+                return studentService.getCountByFullName(byName.get());
+            }
+
+            return studentService.findByFullName(byName.get());
+        }
+        return studentService.findAll();
+    }
+
     @GetMapping(path = "/{id}")
-    public Student get(@PathVariable("id")String id) {
+    public Student get(@PathVariable("id") String id) {
         return studentService.findStudent(id);
     }
 
     @PutMapping(path = "/{id}")
-    public void put(@PathVariable("id")String id, @RequestBody Student student) {
+    public void put(@PathVariable("id") String id, @RequestBody Student student) {
         studentService.updateStudent(id, student);
     }
 

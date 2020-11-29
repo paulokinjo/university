@@ -5,6 +5,8 @@ import com.uni.university.model.student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -35,5 +37,20 @@ public class StudentServiceImpl implements StudentService {
 
         student = updatedStudent;
         studentRepository.save(student);
+    }
+
+    @Override
+    public List<Student> findAll() {
+        return (List<Student>)studentRepository.findAll();
+    }
+
+    @Override
+    public List<Student> findByFullName(String fullName) {
+        return studentRepository.findByFullName(fullName);
+    }
+
+    @Override
+    public Integer getCountByFullName(String fullName) {
+        return studentRepository.getCountByFullName(fullName);
     }
 }
